@@ -1,0 +1,427 @@
+login: caspe159
+Name: Nicholas Caspers
+
+Daily Work Listed
+
+Purpose:
+    Creation of a Twitter bot capable of determining the polarity of tweets. Polarity, here, refers to people's positive or negative reaction to said tweets. The Tweets will be analyzed through generic data as well as diving into the specific responses of other twitter accounts. Generic data will include amount of replys, retweets, and likes/favorites. This can be obtained through surface level pulls surrounding the tweet. The yeild of data from specific responses, however, will require surface level data from responses to the original tweet. Responses include literal responses alongside when the original tweet was quoted by another user tweet. These two aspects can be fleeced for data regarding a user's placement on the positive to negative perspective spectrum.
+
+Key:
+    #, accomplished earlier
+    -, means a note of want or potential fix
+    X, means this bug has been paused, ignored, or abandoned
+    *, accomplished a particular fix or want
+    $, answer to an accomplishment (should show up below the accomplishment '*')
+    (4 spaces)^, Notes to the record above, should contain specifics
+
+Keys (after 12/30/2017):
+    -*, refers to a fixed bug (the obvious combination of - and *)
+    (4 spaces)^*, Notes to the above record, specifically after a fixed bug
+    
+
+===11/29/2017===
+# Obtained a project under Twitter's domain
+# Can pull data from Twitter's API via the Oauth Keys
+
+- Need a slight better idea of the Twitter REST API pulls, check the Twitter Developer page
+- surface level analysis of a given tweet, analysis of json file
+- pull out surface level data from taken json file
+- The amount of replys can only be found in the actual reply
+
+(1h 30m)
+
+===11/30/2017===
+- Need a slight better idea of the Twitter REST API pulls, check the Twitter Developer page
+- surface level analysis of a given tweet, analysis of json file
+- pull out surface level data from taken json file
+- The amount of replys can only be found in the actual reply
+
+(0h , result of EE 3015 Signals)
+
+===12/1/2017===
+- Need a slight better idea of the Twitter REST API pulls, check the Twitter Developer page
+* Info can be found on Twitter's Dev page: https://developer.twitter.com/ 
+
+- surface level analysis of a given tweet, analysis of json file
+* from regular /statuses/show.json?id=___ 
+    ^ favorite_count, the amount of favorites
+    ^ retweet_count, the amount of retweets
+    ^ text, the actual tweet message 
+    ^ created_at, the creation time of the tweet
+    ^ in_reply_to_status_id, if the tweet is a reply, it provides the id of status the tweet is replying to
+
+- pull out surface level data from taken json file
+* A tweet class has been added to hold data, and a standard tweet json can be read appropriatly
+
+- How to determine the amount of replys for a tweet
+* Have to actually search for tweets that replied, amount is not inherent in baseline pull
+    ^ Have to search for replies to a account, check recent tweets, and find tweets that replied
+
+- Determine how to obtain retweets info (both commented and uncommented)
+- Pull Retweets with comments
+- Analyze Retweets with comments
+
+(3h)
+
+===12/2/2017===
+- Determine how to obtain retweets info (both commented and uncommented)
+* There is some mini url that shows up in the surface level tweet pull
+- Pull Retweets with comments
+- Analyze Retweets with comments
+
+- Might also need to look into Quoted tweets
+    ^ along the lines of replies and retweets with comments
+    ^ Quotes are just retweets with comments
+* Quotes are just retweets with comments
+
+(1h)
+
+===12/3/2017===
+- How to actually find the url of quoted tweets within the original tweet
+    ^ Need the t.co link, which cannot be translated on machine, only by twitter
+    ^ So, must actually quote a tweet, and then pull that tweet
+- Pull Retweets with comments
+- Analyze Retweets with comments
+
+- Need to determine how to pull a tweet with a set of text
+    ^ use: https://api.twitter.com/1.1/search/tweets.json?q=
+    ^ granted it has to be url encoded (the query that is)
+
+(1h)
+
+===12/4/2017===
+- How to actually find the url of quoted tweets within the original tweet
+    ^ Need the t.co link, which cannot be translated on machine, only by twitter
+    ^ So, must actually quote a tweet, and then pull that tweet
+- Pull Retweets with comments
+- Analyze Retweets with comments
+
+- Need to determine how to pull a tweet with a set of text
+    ^ use: https://api.twitter.com/1.1/search/tweets.json?q=
+    ^ granted it has to be url encoded (the query that is)
+
+- Determine how to get reply tweets
+    ^ probably grab tweets reply to account of the original tweet (keeping in mind time filtering)
+    ^ filter said tweets on source code side
+
+(10m)
+
+===12/5/2017===
+- How to actually find the url of quoted tweets within the original tweet
+    ^ Need the t.co link, which cannot be translated on machine, only by twitter
+    ^ So, must actually quote a tweet, and then pull that tweet
+* https://developer.twitter.com/en/docs/basics/tco 
+    ^ Shows that must tweet with full url to obtain the t.co
+    ^ granted requires reading the new tweet, or dm,  and obtaining the t.co
+    ^ most likely use a self dm: https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event 
+    ^ still might be able to search out tweets and find the t.co off of other people
+- Pull Retweets with comments
+- Analyze Retweets with comments
+
+- Need to determine how to pull a tweet with a set of text
+    ^ use: https://api.twitter.com/1.1/search/tweets.json?q=
+    ^ granted it has to be url encoded (the query that is)
+* https://api.twitter.com/1.1/search/tweets.json?q=<insert text here>&count=100
+    ^ quite literally this, provide the various operators, just need the t.co
+
+- Determine how to get reply tweets
+    ^ probably grab tweets reply to account of the original tweet (keeping in mind time filtering)
+    ^ filter said tweets on source code side
+* https://api.twitter.com/1.1/search/tweets.json?q=to:Caspe159&count=100
+    ^ this is the main filter, it can be added upon, such as time/date, for more precise filtering
+
+- Need to pull and filter reply tweets to a given tweet
+
+(45m)
+
+===12/6/2017===
+- Pull Retweets with comments (comments means quoted tweets)
+- Analyze Retweets with comments (comments means quoteed tweets)
+- Need to pull and filter reply tweets to a given tweet
+
+(1h 30m)
+
+===12/7/2017===
+X - Pull Retweets with comments (comments means quoted tweets)
+    ^ Cant be done, unless one pulls all tweets and checks the quoted status
+X - Analyze Retweets with comments (comments means quoteed tweets)
+    ^ Cant be done, dame reason as aboce
+- Need to pull and filter reply tweets to a given tweet
+* Can pull, does filter, need to add time filter for sake of not pulling everything
+
+- add time filter to the reply tweet pulling to make sure not pulling everything
+* time filter added
+
+X - if had t.co url, pull tweets quoting a root tweet
+    ^ cant be done, t.co url changes from quote to quote, even the dm one changes
+- Must dm self to obtain a url of quoted tweets
+    ^ requires new twitter project
+    ^ and a new account ( most likely not )
+* obtained dm stuff via tweety, realize quote tweets are not worth it
+
+- Analyze replies, provide substring frequencies, and overall polarity
+- reevaluate the goal of this, and the various facets that want to be added
+* Two main aspects to this bot
+    ^ One aspect is to run through the replies and provide analysis (reply to root tweet, and normal Tweet)
+    ^ Other Aspect is to do an overall profile analysis (and tweet at them)
+    ^ Post to reddit
+    ^ probably do so in this order
+
+(4h)
+
+===12/21/2017===
+
+- Reevalutate the goal of the project
+    ^ Can pull all replys of a tweet, still need to evaluate
+    ^ Sentiment value of response to a root tweet: via replys, amount of retweets, amount of favorites
+    ^ Sentiment value of a profile (over the course of a week or whatever the limit look back is)
+    ^ Profile sentiment includes, sentiment of the tweets sent, and sentiment of response of said tweets
+    ^ Note: if the root tweet is quoted is does not count as a retweet
+* As shown in the notes (indicated by "^") above.
+
+- Analyze the polarity of the replies to a tweet
+    ^ Need a list of good and bad words, aka words that dictate pos or neg polarity
+    ^ Also need words that change/invert the polatirty of the good/bad words
+    ^ Break up based on sentences, and add the sentence totals together.
+- Provide a structure to a polarity point scoring system (basically how to handle replys vs retweets vs favs).
+- Log the statistics of a root tweet into some file
+
+(30m)
+
+===12/22/2017===
+
+- Analyze the polarity of the replies to a tweet
+    ^ Need a list of good and bad words, aka words that dictate pos or neg polarity
+    ^ Also need words that change/invert the polatirty of the good/bad words
+    ^ Break up based on sentences, and add the sentence totals together.
+- Provide a structure to a polarity point scoring system (basically how to handle replys vs retweets vs favs).
+- Log the statistics of a root tweet into some file
+
+(20m)
+
+===12/23/2017===
+
+- Analyze the polarity of the replies to a tweet
+    ^ Need a list of good and bad words, aka words that dictate pos or neg polarity
+    ^ Also need words that change/invert the polatirty of the good/bad words
+    ^ Break up based on sentences, and add the sentence totals together.
+- Provide a structure to a polarity point scoring system (basically how to handle replys vs retweets vs favs).
+- Log the statistics of a root tweet into some file
+
+- break text of tweets into list of sentences which are lists of words
+    ^ might just use TextBlob as sentiment analysis
+- provide basic point system (words, capitalization, and punctuation)
+    ^ might use TextBlob as sentiment analysis
+
+- need to handle emojis, that are encoded in unicode
+* They have been ignored for teh time being 
+
+(1h)
+
+===12/24/2017===
+
+- Analyze the polarity of the replies to a tweet
+    ^ Need a list of good and bad words, aka words that dictate pos or neg polarity
+    ^ Also need words that change/invert the polatirty of the good/bad words
+    ^ Break up based on sentences, and add the sentence totals together.
+* Using TextBlob as a substitute
+- Provide a structure to a polarity point scoring system (basically how to handle replys vs retweets vs favs).
+* Going to remap textblob scoring to -5.0 to 5.0 instead of -1.0 to 1.0, still need to handle the retweets and favs
+- Log the statistics of a root tweet into some file
+
+- break text of tweets into list of sentences which are lists of words
+    ^ might just use TextBlob as sentiment analysis
+* I am using textBlob sentiment analysis
+- provide basic point system (words, capitalization, and punctuation)
+    ^ might use TextBlob as sentiment analysis
+* I am using textblob sentiment analysis
+
+- Need to remap the textblob sentiment analysis to -5.0 to 5.0
+* just multiplied the averages by 5
+- Obtain frequency of word usage
+    ^ still word frequency, might be able to use tthe text blob to obtain the word frequency
+- Setup twitter and gmail account for the polarity bot
+* Done polaritybot@gmail.com staYLZ85Y! (the twitter has the same password)
+
+- Unsure how to handle a user's overall polarity, whether average out or add
+* prob just average out
+- I think i want the standard deviation of the averaged polarity
+* implemented for the polarity and the subjectivity aspect
+
+- Need to handle the hashtag usage and the emoji usage 
+- Check the program against bigger twitter feeds
+    ^ will fail if too many tweets to run through, need a timer 
+
+(1h 30m)
+
+===12/25/2017===
+
+- Log the statistics of a root tweet into some file
+- Obtain frequency of word usage
+    ^ still word frequency, might be able to use tthe text blob to obtain the word frequency
+- Need to handle the hashtag usage and the emoji usage 
+- Check the program against bigger twitter feeds
+    ^ will fail if too many tweets to run through, need a timer 
+* now handles bigge twitter feeds
+* also implements more efficent use with since_id and max_id (for pulling replies)
+
+- might want to go into the replies of replies
+
+(1h)
+
+===12/26/2017===
+
+- Log the statistics of a root tweet into some file
+- Obtain frequency of word usage
+    ^ still word frequency, might be able to use tthe text blob to obtain the word frequency
+* Frequency is obtained, but the max frequency must be found, and shitty words must be filtered out
+- Need to handle the hashtag usage and the emoji usage 
+- might want to go into the replies of replies
+    ^ Doesnt really dictate a direct response to the root tweet
+
+- find the three maximum frequencies amongst the word lists
+* done in TweetAnalyzer getHighWordFreq
+- might want to remove punctuation in words when doing word frequency
+* punctuation removed with translate, might need to worry about the http case
+
+- handle the http links which want to have their punctuation
+* this exception was handled in the removePunctuation in TweetAnalyzer
+
+- maybe do graph analysis of the avg polarity changing over time
+    ^ use matlibplot probably, unsure if i have to download (i dont)
+    ^ maybe for a later update
+- format output data that is ok for a tweet, might need multiple tweets
+    ^ using average polarity, maybe average subjectivity, word frequency (might push to 5), retweets, favorites
+    ^ might want to make a graph of the change in polarity over time
+- handle a lack of freqeuncy in word usage
+* Taken into account
+
+(1h)
+
+===12/28/2017===
+
+- Need to handle the hashtag usage and the emoji usage 
+- might want to go into the replies of replies
+    ^ Doesnt really dictate a direct response to the root tweet
+- maybe do graph analysis of the avg polarity changing over time
+    ^ use matlibplot probably, unsure if i have to download (i dont)
+    ^ maybe for a later update
+- format output data that is ok for a tweet, might need multiple tweets
+    ^ using average polarity, maybe average subjectivity, word frequency (might push to 5), retweets, favorites
+    ^ might want to make a graph of the change in polarity over time
+    ^ format being polarity analysis with the tweet quoted and @ing the op
+    ^ followed by another tweet detiling the word usage
+* Tweets formatted, into two tweets one for polarity score and one for the word freqeuency
+    ^ may be subjected to further change
+
+(1h)
+
+===12/29/2017===
+
+- Need to handle the hashtag usage and the emoji usage 
+- might want to go into the replies of replies
+    ^ Doesnt really dictate a direct response to the root tweet
+- maybe do graph analysis of the avg polarity changing over time
+    ^ use matlibplot probably, unsure if i have to download (i dont)
+    ^ maybe for a later update
+
+- might want a percentage of pos, neg, or whatever
+* percentages donw, required some forgotten casting
+- handle words "you" and "a" and some extras for the word frequency counts
+* had to check the unimp words checking
+- handle the multiple decimal points of the output tweet
+* done with round method
+- add polarity sign for the tweet
+* added and the negative zero thing was taken care of
+- create a reply tweet to the original poster
+* reply created in the TweetAnalyzer
+- also send off the tweets
+* First Tweet sent!!
+- need new key and the like for the new account
+* New key obtained for sending off tweets
+
+- add the percentage of polarity to the sentiment update tweet
+* Has been included to the toStringSentimentUpdate
+- create script to handle the running of the program
+* is done by Run.sh
+- construct a configuration file alongside a reading class of the configuration file
+* Configuration Files constructed but not complete entirely
+? allow program to handle account evaluation
+? create a plotting graph to add plots media to the tweets
+
+(3h)
+
+===12/30/2017===
+
+- Ensure a working sandboxmode and production mode
+    ^ should be there?
+* Seems to be working properly
+    ^ Even aded a separate production and sandboz run script
+- entry number or daily tweet number to sentiment update tweet
+* Should be fine, based off the log which is only changed in production mode
+- change the sentiment percentage update output to have full polarity words (eg Positive instead of Pos)
+* Changed
+- Send out set of analysis for todays root tweet (whatever that may be)
+* Done on PokemonGo Tweet 945481832694501377
+- Add a key bank class to swap between to allow the analysis of bigger tweets/accounts
+    ^ probably include 5 keys, just in case
+- change the polarity bot version, should be 1.1xx, where xx is the amount of changes added
+    ^ should be 1, 2, 3, 4, 5, 6, 7, 8
+    ^ probably 1.108
+* has been changed to 1.1.8
+- Update the updating of the Log file to include the new entry number
+* has been updated
+
+(2h)
+
+===1/1/2018===
+
+-* Add a key bank class to swap between to allow the analysis of bigger tweets/accounts
+    ^ probably include 5 keys, just in case
+    ^* should be implemented alongside the 15 minute timer
+-* Need the five keys to access twitter properly
+    ^* keys have been obtained most are in one account, its a 3 and 2 split
+-* Change the reply to the op, to hold the base statistic information
+    ^ might as well show them the data directly might produce a following
+    ^* Replies and statistics sent straight to the op
+-* send the tweet for today, most likely a politcal figure
+    ^ ben shapiro, rosie o'donnell
+    ^ probably pick a liberal first, appeal to the internet
+    ^* Used Ellen Show twitter
+-* update the polarity bot version
+    ^ should be 1.2.xx
+    ^ key bank, change in replies, change in normal status, change in reply content, change in status content, change in log input, timer fix, key switching, whooops standard fix
+    ^* set to 1.2.9
+-* make sure the scripts are using inputted keys
+    ^* scripts are changed, only really use the Pullxxx.sh scripts
+-* Need to change main file and log file to hold new changes to status updates
+-* fix the standard deviationin the sentiment tweet to say "Standard"
+    ^* whoops haha
+
+- Move all the tweet sending into the Using Tweepy, dont need to see all of those lines
+- update the rules of the configuration files
+
+(2h)
+
+===1/2/2018===
+
+-* add a hashtag frequency usage
+    ^* added, also added to the updates
+- might need to add a stopwatch for each key in the bank
+-* tweet in replying to Trump
+
+(1h)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
